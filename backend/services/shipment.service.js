@@ -22,7 +22,7 @@ const shipmentService = {
     return shipments.filter((shipment) => shipment.userId === userId);
   },
 
-  async getShipmentById(userId, shipmentId) {
+  async getShipmentById(shipmentId, userId) {
     const shipment = shipments.find(
       (shipment) => shipment.id === shipmentId && shipment.userId === userId
     );
@@ -32,7 +32,7 @@ const shipmentService = {
     return shipment;
   },
 
-  async updateShipment(userId, shipmentId, shipmentData) {
+  async updateShipment(shipmentId, userId, shipmentData) {
     const shipmentIndex = shipments.findIndex(
       (shipment) => shipment.id === shipmentId && shipment.userId === userId
     );
@@ -46,7 +46,7 @@ const shipmentService = {
     };
     return shipments[shipmentIndex];
   },
-  async deleteShipment(userId, shipmentId) {
+  async deleteShipment(shipmentId, userId) {
     const shipmentIndex = shipments.findIndex(
       (shipment) => shipment.id === shipmentId && shipment.userId === userId
     );
@@ -54,8 +54,7 @@ const shipmentService = {
       throw new Error("Shipment not found");
     }
 
-    const deletedShipment = shipments.splice(shipmentIndex, 1);
-    [0];
+    const deletedShipment = shipments.splice(shipmentIndex, 1)[0];
     return deletedShipment;
   },
 };
