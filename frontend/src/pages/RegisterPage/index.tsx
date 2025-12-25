@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "../schema";
-import type { RegisterFormData } from "../schema";
-import { useAuthStore } from "../stores/auth.store";
+import { registerSchema } from "../../schema";
+import type { RegisterFormData } from "../../schema";
+import { useAuthStore } from "../../stores/auth.store";
 import { TextField, Button, Typography, Box, Alert, Stack, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -29,7 +29,7 @@ export default function LoginPage() {
 
         {error && <Alert severity="error" sx={{ width: '100%', mt: 2 }}>{error}</Alert>}
 
-        <Stack component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3, width: '100%', gap: 2 }}>
+        <Stack dir="rtl" component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3, width: '100%', gap: 2 }}>
             <TextField 
                 label="Fullname"
                 {...register("fullname")}

@@ -1,5 +1,5 @@
 import { useShipmentStore } from "../../stores/shipment.store";
-import { Button, Paper, Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import ShipmentsTable from "./components/ShipmentsTable";
 import CreateShipmentDialog from "./components/CreateShipmentDialog";
 import { useState, useEffect } from "react";
@@ -14,17 +14,9 @@ export default function ShipmentsPage() {
   }, []);
 
   return (
-    <Paper
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <>
       <Stack sx={{ gap: 4 }}>
-        <Button variant="contained" onClick={() => setCreateDialogOpen(true)}>
+        <Button variant="contained" sx={{ alignSelf: "flex-end" }} onClick={() => setCreateDialogOpen(true)}>
           Create Shipment
         </Button>
         <ShipmentsTable shipments={shipments} />
@@ -35,6 +27,6 @@ export default function ShipmentsPage() {
         onClose={() => setCreateDialogOpen(false)}
         onCreate={createShipment}
       />
-    </Paper>
+    </>
   );
 }

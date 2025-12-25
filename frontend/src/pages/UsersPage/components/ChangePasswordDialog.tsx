@@ -10,20 +10,20 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { createShipmentSchema } from "../../../schema";
-import type { CreateShipmentFormData } from "../../../schema";
+import { changePasswordSchema } from "../../../schema";
+import type { ChangePasswordFormData } from "../../../schema";
 
-interface CreateShipmentDialogProps {
+interface ChangePasswordDialogProps {
   open: boolean;
   onClose: () => void;
-  onCreate: (data: CreateShipmentFormData) => Promise<void>;
+  onChangePassword: (data: ChangePasswordFormData) => Promise<void>;
 }
 
-export default function CreateShipmentDialog({
+export default function ChangePasswordDialog({
   open,
   onClose,
-  onCreate,
-}: CreateShipmentDialogProps) {
+  onChangePassword,
+}: ChangePasswordDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -31,17 +31,18 @@ export default function CreateShipmentDialog({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<CreateShipmentFormData>({
-    resolver: zodResolver(createShipmentSchema),
+  } = useForm<ChangePasswordFormData>({
+    resolver: zodResolver(changePasswordSchema),
   });
 
-  const onSubmit = async (data: CreateShipmentFormData) => {
+  const onSubmit = async (data: ChangePasswordFormData) => {
     setIsSubmitting(true);
     try {
-      await onCreate(data);
+      await onChangePassword(data);
       reset();
       onClose();
     } catch {
+      // Error handling is done in the service/store
     } finally {
       setIsSubmitting(false);
     }
@@ -54,33 +55,36 @@ export default function CreateShipmentDialog({
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Create New Shipment</DialogTitle>
+      <DialogTitle>Change Password</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent
           dir="rtl" sx={{ display: "flex", gap: 4, flexDirection: "column" }}
         >
           <TextField
             fullWidth
-            label="Pickup location"
-            {...register("pickupLocation")}
-            error={!!errors.pickupLocation}
-            helperText={errors.pickupLocation?.message}
+            type="password"
+            label="Current Password"
+            {...register("currentPassword")}
+            error={!!errors.currentPassword}
+            helperText={errors.currentPassword?.message}
           />
 
           <TextField
             fullWidth
-            label="Delivery location"
-            {...register("deliveryLocation")}
-            error={!!errors.deliveryLocation}
-            helperText={errors.deliveryLocation?.message}
+            type="password"
+            label="New Password"
+            {...register("newPassword")}
+            error={!!errors.newPassword}
+            helperText={errors.newPassword?.message}
           />
 
           <TextField
             fullWidth
-            label="Delivery person"
-            {...register("deliveryPerson")}
-            error={!!errors.deliveryPerson}
-            helperText={errors.deliveryPerson?.message}
+            type="password"
+            label="Confirm New Password"
+            {...register("confirmPassword")}
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword?.message}
           />
         </DialogContent>
 
@@ -89,7 +93,7 @@ export default function CreateShipmentDialog({
             Cancel
           </Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? "Creating..." : "Create Shipment"}
+            {isSubmitting ? "Changing..." : "Change Password"}
           </Button>
         </DialogActions>
       </Box>

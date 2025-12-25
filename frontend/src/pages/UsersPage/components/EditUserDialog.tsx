@@ -10,23 +10,23 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { updateShipmentSchema } from "../../../schema";
-import type { UpdateShipmentFormData } from "../../../schema";
-import type { Shipment } from "../../../types/shipment.interface";
+import { updateUserSchema } from "../../../schema";
+import type { UpdateUserFormData } from "../../../schema";
+import type { User } from "../../../types/user.interface";
 
-interface EditShipmentDialogProps {
+interface EditUserDialogProps {
   open: boolean;
-  shipment: Shipment | null;
+  user: User | null;
   onClose: () => void;
-  onUpdate: (data: UpdateShipmentFormData) => Promise<void>;
+  onUpdate: (data: UpdateUserFormData) => Promise<void>;
 }
 
-export default function EditShipmentDialog({
+export default function EditUserDialog({
   open,
-  shipment,
+  user,
   onClose,
   onUpdate,
-}: EditShipmentDialogProps) {
+}: EditUserDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -34,18 +34,18 @@ export default function EditShipmentDialog({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<UpdateShipmentFormData>({
-    resolver: zodResolver(updateShipmentSchema),
-    values: shipment
+  } = useForm<UpdateUserFormData>({
+    resolver: zodResolver(updateUserSchema),
+    values: user
       ? {
-          pickupLocation: shipment.pickupLocation,
-          deliveryLocation: shipment.deliveryLocation,
-          deliveryPerson: shipment.deliveryPerson,
+          fullname: user.fullname,
+          email: user.email,
+          phone: user.phone,
         }
       : undefined,
   });
 
-  const onSubmit = async (data: UpdateShipmentFormData) => {
+  const onSubmit = async (data: UpdateUserFormData) => {
     setIsSubmitting(true);
     try {
       await onUpdate(data);
@@ -64,33 +64,33 @@ export default function EditShipmentDialog({
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Edit Shipment</DialogTitle>
+      <DialogTitle>Edit User</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent
           dir="rtl" sx={{ display: "flex", gap: 4, flexDirection: "column" }}
         >
           <TextField
             fullWidth
-            label="Pickup location"
-            {...register("pickupLocation")}
-            error={!!errors.pickupLocation}
-            helperText={errors.pickupLocation?.message}
+            label="Full name"
+            {...register("fullname")}
+            error={!!errors.fullname}
+            helperText={errors.fullname?.message}
           />
 
           <TextField
             fullWidth
-            label="Delivery location"
-            {...register("deliveryLocation")}
-            error={!!errors.deliveryLocation}
-            helperText={errors.deliveryLocation?.message}
+            label="Email"
+            {...register("email")}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
 
           <TextField
             fullWidth
-            label="Delivery person"
-            {...register("deliveryPerson")}
-            error={!!errors.deliveryPerson}
-            helperText={errors.deliveryPerson?.message}
+            label="Phone"
+            {...register("phone")}
+            error={!!errors.phone}
+            helperText={errors.phone?.message}
           />
         </DialogContent>
 
@@ -99,7 +99,7 @@ export default function EditShipmentDialog({
             Cancel
           </Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? "Updating..." : "Update Shipment"}
+            {isSubmitting ? "Updating..." : "Update User"}
           </Button>
         </DialogActions>
       </Box>

@@ -10,7 +10,7 @@ const authService = {
   },
 
   async register(userData) {
-    const { fullName, email, phone, password } = userData;
+    const { fullname, email, phone, password } = userData;
 
     const isExistingUser = users.find((user) => user.email === email);
     if (isExistingUser) {
@@ -22,7 +22,7 @@ const authService = {
 
     const newUser = {
       id: userId,
-      fullName,
+      fullname,
       email,
       phone,
       password: hashedPassword,
