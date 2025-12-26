@@ -56,7 +56,7 @@ export default function UsersTable({ users }: { users: User[] }) {
     </Box>
   ) : (
     <>
-      <TableContainer>
+      <TableContainer sx={{ overflowX: "auto" ,  width: '100%'}}>
         <Table>
           <TableHead>
             <TableRow>

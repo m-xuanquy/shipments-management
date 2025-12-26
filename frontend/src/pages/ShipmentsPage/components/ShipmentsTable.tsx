@@ -60,7 +60,7 @@ export default function ShipmentsTable({
     </Box>
   ) : (
     <>
-      <TableContainer>
+      <TableContainer sx={{ overflowX: "auto" ,  width: '100%'}}>
         <Table>
           <TableHead>
             <TableRow>
